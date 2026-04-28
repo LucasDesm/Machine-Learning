@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<style>
+    body {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    label {
+        display: block;
+    }
+
+    input[type=number],
+    select {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<head>
+    <title>ML | ESME - Heart Disease</title>
+</head>
+
+<body>
+    <h1>ML | ESME - Heart Disease</h1>
+    <h2>Entrez les données du patient:</h2>
+    <form method="POST" action="/predict">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" value="63" required><br>
+
+        <label for="sex">Sex:</label>
+        <select id="sex" name="sex" required>
+            <option value="">Select</option>
+            <option value="Female">Female</option>
+            <option value="Male" selected>Male</option>
+        </select><br>
+
+        <label for="cp">Chest Pain Type:</label>
+        <select id="cp" name="cp" required>
+            <option value="">Select</option>
+            <option value="typical angina" selected>Typical Angina</option>
+            <option value="atypical angina">Atypical Angina</option>
+            <option value="non-anginal pain">Non-Anginal</option>
+            <option value="asymptomatic">Asymptomatic</option>
+        </select><br>
+
+        <label for="trestbps">Resting Blood Pressure:</label>
+        <input type="number" id="trestbps" name="trestbps" value="145" required><br>
+
+        <label for="chol">Cholesterol:</label>
+        <input type="number" id="chol" name="chol" value="233" required><br>
+
+        <label for="fbs">Fasting Blood Sugar:</label>
+        <select id="fbs" name="fbs" required>
+            <option value="">Select</option>
+            <option value="FALSE">False</option>
+            <option value="TRUE" selected>True</option>
+        </select><br>
+
+        <label for="restecg">ECG at Rest:</label>
+        <select id="restecg" name="restecg" required>
+            <option value="">Select</option>
+            <option value="normal">Normal</option>
+            <option value="lv hypertrophy" selected>LV Hypertrophy</option>
+            <option value="st-t abnormality">ST-T Abnormality</option>
+        </select><br>
+
+        <label for="thalch">Max Heart Rate:</label>
+        <input type="number" id="thalch" name="thalch" value="150" required><br>
+
+        <label for="exang">Exercise Induced Angina:</label>
+        <select id="exang" name="exang" required>
+            <option value="">Select</option>
+            <option value="FALSE" selected>False</option>
+            <option value="TRUE">True</option>
+        </select><br>
+
+        <label for="oldpeak">ST Depression:</label>
+        <input type="number" id="oldpeak" name="oldpeak" value="2.3" required><br>
+
+        <label for="slope">Slope:</label>
+        <select id="slope" name="slope" required>
+            <option value="">Select</option>
+            <option value="upsloping">Upsloping</option>
+            <option value="downsloping" selected>Downsloping</option>
+            <option value="flat">Flat</option>
+        </select><br>
+
+        <label for="ca">Vessels:</label>
+        <input type="number" id="ca" name="ca" value="0" required><br>
+
+        <label for="thal">Thalassemia:</label>
+        <select id="thal" name="thal" required>
+            <option value="">Select</option>
+            <option value="normal">Normal</option>
+            <option value="fixed defect" selected>Fixed Defect</option>
+            <option value="reversible defect">Reversible Defect</option>
+        </select><br>
+
+        <input type="submit" value="Predire">
+    </form>
+    <footer>
+        <p><small>Données de: Hungarian Institute of Cardiology, University Hospital Zurich, University Hospital
+                Basel, V.A. Medical Center Long Beach and Cleveland Clinic Foundation</small></p>
+    </footer>
+</body>
+
+</html>

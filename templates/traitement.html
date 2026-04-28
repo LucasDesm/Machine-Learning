@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<style>
+    body {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    label {
+        display: block;
+    }
+
+    input[type=number],
+    select {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    table {
+        width: 100%;
+        background-color: white;
+        margin: 20px 0;
+        border-radius: 4px;
+        overflow: hidden;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+    }
+</style>
+
+<head>
+    <title>ML | ESME - Heart Disease</title>
+</head>
+
+<body>
+    <h1>Prédiction</h1>
+
+    <h2>Résultat</h2>
+    {% if result %}
+    <p>Prédiction: {{ result }}</p>
+    {% else %}
+    <p>Un problème est survenu.</p>
+    {% endif %}
+
+    <h2>Données d'entrée</h2>
+    <table>
+        <tr>
+            <th>Feature</th>
+            <th>Valeur</th>
+        </tr>
+        {% for column in input_data.columns %}
+        <tr>
+            <td>{{ column }}</td>
+            <td>{{ input_data[column].values[0] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>
