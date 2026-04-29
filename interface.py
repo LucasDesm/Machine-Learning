@@ -114,7 +114,6 @@ def traitement():
     print(Y_pred)
     result = Y_pred[0]
 
-    return render_template("traitement.html", result = result)
     return render_template("traitement.html", input_data = input_data, result = result)
 
 #%% ---------------------------------------------------------------------------------------------------

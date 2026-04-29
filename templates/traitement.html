@@ -70,12 +70,12 @@
     <h1>Prédiction</h1>
 
     <h2>Résultat</h2>
-    {% if result %}
+    {% if result is not none %}
     <p>Prédiction: {{ result }}</p>
     {% else %}
     <p>Un problème est survenu.</p>
     {% endif %}
-    {% if input_data %}
+    {% if input_data is not none and input_data|length > 0 %}
     <h2>Données d'entrée</h2>
     <table>
         <tr>
