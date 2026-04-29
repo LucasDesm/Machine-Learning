@@ -75,7 +75,7 @@
     {% else %}
     <p>Un problème est survenu.</p>
     {% endif %}
-
+    {% if input_data %}
     <h2>Données d'entrée</h2>
     <table>
         <tr>
@@ -89,6 +89,7 @@
         </tr>
         {% endfor %}
     </table>
+    {% endif %}
 </body>
 
 </html>

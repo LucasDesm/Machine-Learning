@@ -29,14 +29,14 @@ colonnes_cat = ['sex','dataset','cp','fbs', 'restecg', 'exang', 'slope', 'thal']
 for col in colonnes_cat :
     df[col] = df[col].fillna(df[col].mode()[0])
 
-def categorical_features(df):
-    object_columns = df.select_dtypes(include=['object','bool']).columns
-    label_encoder = LabelEncoder()
-    for col in object_columns:
-        df[col] = label_encoder.fit_transform(df[col].astype(str))
-    return df
+label_encoders = {}
 
-df = categorical_features(df)
+str_cols = df.select_dtypes(include=['object','bool']).columns
+for col in str_cols:
+    label_encoders[col] = LabelEncoder()
+    label_encoders[col].fit(df[col].astype(str))
+    df[col] = label_encoders[col].transform(df[col].astype(str))
+
 
 X = df.drop('num',axis=1)
 Y=df['num']
@@ -84,7 +84,7 @@ def traitement():
     input_data = pd.DataFrame({
         'age': [age],
         'sex': [sex],
-        'dataset': [''],
+        'dataset': ['Cleveland'],
         'cp': [cp],
         'trestbps': [trestbps],
         'chol': [chol],
@@ -105,14 +105,18 @@ def traitement():
         'oldpeak': float,
         'ca': int,
     })
-    input_data = categorical_features(input_data)
+    input_data_str = input_data.select_dtypes(include=['object','bool']).columns
+    for col in input_data_str:
+        if col in label_encoders:
+            input_data[col] = label_encoders[col].transform(input_data[col].astype(str))
+    print(input_data)
     Y_pred = p1.predict(input_data)
-
+    print(Y_pred)
     result = Y_pred[0]
-    if result :
-        return render_template("traitement.html", input_data = input_data, result = result)
-    else:
-        return render_template("traitement.html")
+
+    return render_template("traitement.html", result = result)
+    return render_template("traitement.html", input_data = input_data, result = result)
+
 #%% ---------------------------------------------------------------------------------------------------
 # Lance serveur flask
 if __name__ == "__main__":
