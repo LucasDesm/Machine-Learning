@@ -15,6 +15,7 @@ df=pd.read_csv('heart_disease_uci.csv')
 #%% ---------------------------------------------------------------------------------------------------
 # Traiter dataset
 df = df.drop('id', axis=1)
+df = df.drop('dataset', axis=1)
 
 df['chol'] = df['chol'].replace(0, np.nan)
 df['trestbps'] = df['trestbps'].replace(0, np.nan)
@@ -24,7 +25,7 @@ colonnes_num = ['age', 'trestbps', 'chol', 'thalch', 'oldpeak', 'ca']
 for col in colonnes_num : 
     df[col] = df[col].fillna(df[col].mean())
     
-colonnes_cat = ['sex','dataset','cp','fbs', 'restecg', 'exang', 'slope', 'thal']
+colonnes_cat = ['sex','cp','fbs', 'restecg', 'exang', 'slope', 'thal']
 
 for col in colonnes_cat :
     df[col] = df[col].fillna(df[col].mode()[0])
@@ -84,7 +85,6 @@ def traitement():
     input_data = pd.DataFrame({
         'age': [age],
         'sex': [sex],
-        'dataset': ['Cleveland'],
         'cp': [cp],
         'trestbps': [trestbps],
         'chol': [chol],
