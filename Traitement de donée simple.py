@@ -15,6 +15,8 @@ print(df.shape)
 
 #traitement des données basiques
 df = df.drop('id', axis=1)
+df = df.drop('dataset', axis=1)
+
 #Valeur aberrante
 df['chol'] = df['chol'].replace(0, np.nan)
 df['trestbps'] = df['trestbps'].replace(0, np.nan)
@@ -26,7 +28,7 @@ colonnes_num = ['age', 'trestbps', 'chol', 'thalch', 'oldpeak', 'ca']
 for col in colonnes_num : 
     df[col] = df[col].fillna(df[col].mean())
     
-colonnes_cat = ['sex','dataset','cp','fbs', 'restecg', 'exang', 'slope', 'thal']
+colonnes_cat = ['sex','cp','fbs', 'restecg', 'exang', 'slope', 'thal']
 
 for col in colonnes_cat :
     df[col] = df[col].fillna(df[col].mode()[0])
@@ -46,6 +48,7 @@ y=df['num']
 print(np.mean(X))
 print(np.std(X))
 print(df.info())
+
 
 from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test = train_test_split(X,y, test_size=0.25, random_state=123)
@@ -152,7 +155,5 @@ grid_gb.fit(X_train_scaled, y_train_res)
 print('Meilleurs paramètres :', grid_gb.best_params_)
 print('CV Score : ', grid_gb.best_score_)
 print('Test F1 :', f1_score(y_test, grid_gb.predict(X_test_scaled), average='weighted'))
-
-
 
 

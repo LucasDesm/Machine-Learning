@@ -15,6 +15,7 @@ print(df.shape)
 
 #traitement des données basiques
 df = df.drop('id', axis=1)
+df = df.drop('dataset', axis=1)
 #Valeur aberrante
 df['chol'] = df['chol'].replace(0, np.nan)
 df['trestbps'] = df['trestbps'].replace(0, np.nan)
@@ -26,7 +27,7 @@ colonnes_num = ['age', 'trestbps', 'chol', 'thalch', 'oldpeak', 'ca']
 for col in colonnes_num : 
     df[col] = df[col].fillna(df[col].mean())
     
-colonnes_cat = ['sex','dataset','cp','fbs', 'restecg', 'exang', 'slope', 'thal']
+colonnes_cat = ['sex','cp','fbs', 'restecg', 'exang', 'slope', 'thal']
 
 for col in colonnes_cat :
     df[col] = df[col].fillna(df[col].mode()[0])
@@ -184,6 +185,7 @@ grid_rf.fit(X_train_scaled, y_train_res)
 print('Meilleurs paramètres :', grid_rf.best_params_)
 print('CV Score :', grid_rf.best_score_)
 print('Test F1 :', f1_score(y_test, grid_rf.predict(X_test_scaled), average='weighted'))
+print('accuracy', accuracy_score(y_test, grid_rf.predict(X_test_scaled)))
 
 #KNN
 param_knn = {
@@ -195,6 +197,7 @@ grid_knn.fit(X_train_scaled, y_train_res)
 print('Meilleurs paramètres :', grid_knn.best_params_)
 print('CV Score :' ,grid_knn.best_score_)
 print('Test F1 :', f1_score(y_test, grid_knn.predict(X_test_scaled), average='weighted'))
+print('accuracy', accuracy_score(y_test, grid_knn.predict(X_test_scaled)))
 
 # SVM
 param_svm = {'C': [0.1, 1, 10],'kernel': ['rbf', 'linear']}
@@ -203,6 +206,7 @@ grid_svm.fit(X_train_scaled, y_train_res)
 print('Meilleurs paramètres :', grid_svm.best_params_)
 print('CV Score :', grid_svm.best_score_)
 print('Test F1 : ', f1_score(y_test, grid_svm.predict(X_test_scaled), average='weighted'))
+print('accuracy', accuracy_score(y_test, grid_svm.predict(X_test_scaled)))
 
 #Gradient Boostin
 
