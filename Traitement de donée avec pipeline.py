@@ -14,6 +14,9 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import GridSearchCV
 from imblearn.pipeline import Pipeline as ImbPipeline
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+
 
 df=pd.read_csv('C:/ML/Machine Learning/Projet finale/Machine-Learning/heart_disease_uci.csv')
 print(df.shape)
@@ -35,28 +38,73 @@ y = LabelEncoder().fit_transform(y)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=123)
 
-pipe_final = ImbPipeline(steps=[('preprocessing', preprocessor),('smote', SMOTE(random_state=42)),('model', DecisionTreeClassifier())])
+#SVM
+pipe_svm = ImbPipeline(steps=[('preprocessing', preprocessor),('smote', SMOTE(random_state=42)),('model', SVC())])
 
-pipe_final.fit(X_train, y_train)
-y_pred = pipe_final.predict(X_test)
+pipe_svm.fit(X_train, y_train)
+y_pred_svm = pipe_svm.predict(X_test)
 
-print("\nRésultats (Pipeline + SMOTE) :")
-print(f"Precision : {precision_score(y_test, y_pred, average='weighted'):.4f}")
-print(f"Recall : {recall_score(y_test, y_pred, average='weighted'):.4f}")
-print(f"F1-Score : {f1_score(y_test, y_pred, average='weighted'):.4f}")
+print("Precision :", precision_score(y_test, y_pred_svm, average='weighted'))
+print("Recall : ", recall_score(y_test, y_pred_svm, average='weighted'))
+print("F1-Score :", f1_score(y_test, y_pred_svm, average='weighted'))
 
-param_grid = {'model__min_samples_leaf': np.arange(1, 4),'model__max_depth': [10, 15, 20]}
+# Optimisation GridSearch
+param_grid_svm = {
+    'model__C': [0.1, 1, 10],
+    'model__kernel': ['rbf', 'linear']
+}
 
-grid = GridSearchCV(pipe_final, param_grid, cv=5)
-grid.fit(X_train, y_train)
+grid_svm = GridSearchCV(pipe_svm, param_grid_svm, cv=5)
+grid_svm.fit(X_train, y_train)
 
-print(f"Meilleurs paramètres : {grid.best_params_}")
-print(f"Meilleur CV score : {grid.best_score_:.4f}")
+print("Meilleurs paramètres :", grid_svm.best_params_)
+print("Meilleur CV score : ", grid_svm.best_score_)
 
-pipe_optimal = grid.best_estimator_
-y_pred_opt = pipe_optimal.predict(X_test)
+pipe_svm_optimal = grid_svm.best_estimator_
+y_pred_svm_opt = pipe_svm_optimal.predict(X_test)
 
-print("\nRésultats (Pipeline + SMOTE + GridSearchCV) :")
-print(f"Precision : {precision_score(y_test, y_pred_opt, average='weighted'):.4f}")
-print(f"Recall : {recall_score(y_test, y_pred_opt, average='weighted'):.4f}")
-print(f"F1-Score : {f1_score(y_test, y_pred_opt, average='weighted'):.4f}")
+print("Precision :", precision_score(y_test, y_pred_svm_opt, average='weighted'))
+print("Recall :", recall_score(y_test, y_pred_svm_opt, average='weighted'))
+print("F1-Score :", f1_score(y_test, y_pred_svm_opt, average='weighted'))
+
+#random forest
+pipe_rf = ImbPipeline(steps=[('preprocessing', preprocessor),('smote', SMOTE(random_state=42)),('model', RandomForestClassifier(random_state=42))])
+
+pipe_rf.fit(X_train, y_train)
+y_pred_rf = pipe_rf.predict(X_test)
+
+print("Precision : ", precision_score(y_test, y_pred_rf, average='weighted'))
+print(f"Recall : ", recall_score(y_test, y_pred_rf, average='weighted'))
+print(f"F1-Score :", f1_score(y_test, y_pred_rf, average='weighted'))
+
+# Optimisation GridSearch
+param_grid_rf = {
+    'model__n_estimators': [50, 100, 200],
+    'model__max_depth': [10, 15, 20, None],
+    'model__min_samples_leaf': [1, 2, 3]
+}
+
+grid_rf = GridSearchCV(pipe_rf, param_grid_rf, cv=5)
+grid_rf.fit(X_train, y_train)
+
+print("Meilleurs paramètres :", grid_rf.best_params_)
+print("Meilleur CV score :", grid_rf.best_score_)
+
+pipe_rf_optimal = grid_rf.best_estimator_
+y_pred_rf_opt = pipe_rf_optimal.predict(X_test)
+
+print("Precision :", precision_score(y_test, y_pred_rf_opt, average='weighted'))
+print("Recall :", recall_score(y_test, y_pred_rf_opt, average='weighted'))
+print("F1-Score :", f1_score(y_test, y_pred_rf_opt, average='weighted'))
+
+
+
+
+
+
+
+
+
+
+
+
