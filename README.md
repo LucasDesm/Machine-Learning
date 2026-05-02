@@ -9,3 +9,10 @@ pip install flask
 export FLASK_APP=interface.py
 flask run
 ```
+# Le dataset : Heart Disease UCI
+-920 patients provenant de 4 hôpitaux diérents
+-16 features : variables numériques (âge, pression artérielle, cholestérol, fréquence cardiaque max,
+etc.) et variables catégorielles (sexe, type de douleur thoracique, etc.).
+-Variable cible num : entier de 0 à 4 représentant le stade de la maladie cardiaque.
+        0 : pas de maladie cardiaque
+        1, 2, 3, 4 : présence de la maladie avec gravité croissante
