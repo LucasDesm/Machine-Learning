@@ -27,20 +27,22 @@ y = df['num']
 numeric_features = X.select_dtypes(include=['int64', 'float64']).columns.tolist()
 
 categorical_features = X.select_dtypes(include=['object', 'bool']).columns.tolist()
+#on separe les collones par types 
 
 numeric_transformer = Pipeline([('imputer', SimpleImputer(strategy='mean')),('scaler', StandardScaler())])
-
+#num = moyenne puis standardise, pas de standar sur les NaN
 categorical_transformer = Pipeline([('imputer', SimpleImputer(strategy='most_frequent')),('encoder', OneHotEncoder(handle_unknown='ignore'))])
-
+#cat = mode puis one hote encodeur, converti en entier, handle = ignore --> pour les inconnues dans le test sans fail
 preprocessor = ColumnTransformer(transformers=[('num', numeric_transformer, numeric_features),('cat', categorical_transformer, categorical_features)])
-
+#applique chaque sous-pipe aux colonnes corespondante en parallele
 y = LabelEncoder().fit_transform(y)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=123)
 
 #SVM
 pipe_svm = ImbPipeline(steps=[('preprocessing', preprocessor),('smote', SMOTE(random_state=42)),('model', SVC())])
-
+#ImPipeline est concu pour SMOTE uniquement pendant le fit ignore pendant le predict
+#car pipeline normal creer des points synthétique pour faire des predictions
 pipe_svm.fit(X_train, y_train)
 y_pred_svm = pipe_svm.predict(X_test)
 
