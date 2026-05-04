@@ -2,7 +2,14 @@
 L’objectif de ce projet est de mettre en place une application permettant de prédire du stade d’une maladie chronique. Cette prédiction est basée sur l’exploration, l’analyse, la modélisation et le nettoyage d’un gros volume de données open data, ensuite l’entraînement et l’évaluation de différents modèles de Machine Learning
 ## Exploration des données
 ![](diagrams/histogramme.png)
+Histogrammes des variables numériques : pour repérer les distributions et les valeurs extrêmes. 
+-Valeur négatives dans la features oldpeak
+-Valeur abberrantes :  présence de chol = 0 et trestbps = 0, physiologiquement impossibles,
+à traiter comme des valeurs manquantes
+-De nombreuses valeurs manquantes, notamment sur ca (∼67%), thal (∼53%), slope (∼33%).
+-Distribution déséquilibrée de la cible num.
 ![](diagrams/matrice_confusion.png)
+-On remarque le plupart de nos données sont importantes, test avec les features les plus importants, dégrade les performances. 
 ![](diagrams/boxplot.png)
 ## How to
 Pour lancer le script avec l'interface:
