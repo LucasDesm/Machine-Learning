@@ -67,7 +67,7 @@
 
     <h2>Résultat</h2>
     {% if result is not none %}
-    <p>Prédiction: {{ result }}</p>
+    <p>Prédiction: {{ result }} avec F1-score de {{ f1score }}</p>
     {% else %}
     <p>Un problème est survenu.</p>
     {% endif %}

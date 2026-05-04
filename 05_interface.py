@@ -64,9 +64,15 @@ grid_rf.fit(X_train, Y_train)
 Y_pred = grid_rf.predict(X_test)
 acc = accuracy_score(Y_test, Y_pred)
 print(acc)
+
+score = f1_score(Y_test, Y_pred, average='weighted')
+
+print("Meilleurs paramètres :", grid_rf.best_params_)
+print("Meilleur CV score :", grid_rf.best_score_)
+
 print("Precision :", precision_score(Y_test, Y_pred, average='weighted'))
 print("Recall :", recall_score(Y_test, Y_pred, average='weighted'))
-print("F1-Score :", f1_score(Y_test, Y_pred, average='weighted'))
+print("F1-Score :", score)
 
 #%% ---------------------------------------------------------------------------------------------------
 # Créer app flask avec 2 routes
@@ -127,7 +133,7 @@ def traitement():
     print(Y_pred)
     result = Y_pred[0]
 
-    return render_template("traitement.html", input_data = input_data, result = result)
+    return render_template("traitement.html", input_data = input_data, result = result, f1score=f'{score:.2f}')
 
 #%% ---------------------------------------------------------------------------------------------------
 # Lance serveur     flask
