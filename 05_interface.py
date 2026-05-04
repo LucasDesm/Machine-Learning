@@ -4,12 +4,13 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from imblearn.over_sampling import SMOTE
 from sklearn.pipeline import Pipeline
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.impute import SimpleImputer
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 #%% ---------------------------------------------------------------------------------------------------
 # Importer datas
@@ -49,7 +50,23 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.25, random
 #%% ---------------------------------------------------------------------------------------------------
 # Entrainement
 pipe_rf = ImbPipeline(steps=[('preprocessing', preprocessor),('smote', SMOTE(random_state=42)),('model', RandomForestClassifier(random_state=42))])
-pipe_rf.fit(X_train, Y_train)
+
+# Optimisation GridSearch
+param_grid_rf = {
+    'model__n_estimators': [50, 100, 200],
+    'model__max_depth': [10, 15, 20, None],
+    'model__min_samples_leaf': [1, 2, 3]
+}
+
+grid_rf = GridSearchCV(pipe_rf, param_grid_rf, cv=5)
+grid_rf.fit(X_train, Y_train)
+
+Y_pred = grid_rf.predict(X_test)
+acc = accuracy_score(Y_test, Y_pred)
+print(acc)
+print("Precision :", precision_score(Y_test, Y_pred, average='weighted'))
+print("Recall :", recall_score(Y_test, Y_pred, average='weighted'))
+print("F1-Score :", f1_score(Y_test, Y_pred, average='weighted'))
 
 #%% ---------------------------------------------------------------------------------------------------
 # Créer app flask avec 2 routes
@@ -106,7 +123,7 @@ def traitement():
         if col in label_encoders:
             input_data[col] = label_encoders[col].transform(input_data[col].astype(str))
     print(input_data)
-    Y_pred = pipe_rf.predict(input_data)
+    Y_pred = grid_rf.predict(input_data)
     print(Y_pred)
     result = Y_pred[0]
 
