@@ -14,7 +14,7 @@ Histogrammes des variables numériques : pour repérer les distributions et les 
 On remarque le plupart de nos données sont importantes, test avec les features les plus importants, dégrade les performances. 
 ![](diagrams/boxplot.png)
 
-Plusieurs variales ont des écarts importants, on peut identifier les valeurs abberantes physiologiquement impossible (chol à 0 et oldpeak négatif). Echelles très différentes entre les variables, il faut les standariser avant d'utilise les modèles
+Plusieurs variales ont des écarts importants, on peut identifier les valeurs abberantes physiologiquement impossible (chol à 0 et oldpeak négatif). Echelles très différentes entre les variables, il faut les standariser avant d'utilise les modèles, on ne supprimes pas les valeurs car elles correspondes à nos patients avec des seuils élever 
 ## How to
 Pour lancer le script avec l'interface:
 ```bash
