@@ -11,6 +11,7 @@ Histogrammes des variables numériques : pour repérer les distributions et les 
 ![](diagrams/matrice_confusion.png)
 -On remarque le plupart de nos données sont importantes, test avec les features les plus importants, dégrade les performances. 
 ![](diagrams/boxplot.png)
+Plusieurs variales ont des écarts importants, on peut identifier les valeurs abberantes physiologiquement impossible (chol à 0 et oldpeak négatif).
 ## How to
 Pour lancer le script avec l'interface:
 ```bash
