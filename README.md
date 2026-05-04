@@ -2,6 +2,7 @@
 L’objectif de ce projet est de mettre en place une application permettant de prédire du stade d’une maladie chronique. Cette prédiction est basée sur l’exploration, l’analyse, la modélisation et le nettoyage d’un gros volume de données open data, ensuite l’entraînement et l’évaluation de différents modèles de Machine Learning
 ## Exploration des données
 ![](diagrams/histogramme.png)
+
 Histogrammes des variables numériques : pour repérer les distributions et les valeurs extrêmes. 
 -Valeur négatives dans la features oldpeak
 -Valeur abberrantes :  présence de chol = 0 et trestbps = 0, physiologiquement impossibles,
@@ -9,8 +10,10 @@ Histogrammes des variables numériques : pour repérer les distributions et les 
 -De nombreuses valeurs manquantes, notamment sur ca (∼67%), thal (∼53%), slope (∼33%).
 -Distribution déséquilibrée de la cible num.
 ![](diagrams/matrice_confusion.png)
--On remarque le plupart de nos données sont importantes, test avec les features les plus importants, dégrade les performances. 
+
+On remarque le plupart de nos données sont importantes, test avec les features les plus importants, dégrade les performances. 
 ![](diagrams/boxplot.png)
+
 Plusieurs variales ont des écarts importants, on peut identifier les valeurs abberantes physiologiquement impossible (chol à 0 et oldpeak négatif).
 ## How to
 Pour lancer le script avec l'interface:
@@ -34,3 +37,21 @@ etc.) et variables catégorielles (sexe, type de douleur thoracique, etc.).
 - 109 échantillons: cible = 2
 - 107 échantillons: cible = 3
 - 28 échantillons: cible = 4
+
+### Features
+- id (Unique id for each patient)
+- age (Age of the patient in years)
+- origin (place of study)
+- sex (Male/Female)
+- cp chest pain type ([typical angina, atypical angina, non-anginal, asymptomatic])
+- trestbps resting blood pressure (resting blood pressure (in mm Hg on admission to the hospital))
+- chol (serum cholesterol in mg/dl)
+- fbs (if fasting blood sugar > 120 mg/dl)
+- restecg (resting electrocardiographic results) Values: [normal, stt abnormality, lv hypertrophy]
+- thalach: maximum heart rate achieved
+- exang: exercise-induced angina (True/ False)
+- oldpeak: ST depression induced by exercise relative to rest
+- slope: the slope of the peak exercise ST segment
+- ca: number of major vessels (0-3) colored by fluoroscopy
+- thal: [normal; fixed defect; reversible defect]
+- num: the predicted attribute
